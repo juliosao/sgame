@@ -109,16 +109,16 @@ public class TileGrid extends ScreenObject {
 
                 coords[(i*cols+j)*18+3]=i+1;
                 coords[(i*cols+j)*18+4]=j;
-                coords[(i*cols+j)*6+5]=0;
+                coords[(i*cols+j)*18+5]=0;
 
                 coords[(i*cols+j)*18+6]=i;
                 coords[(i*cols+j)*18+7]=j+1;
-                coords[(i*cols+j)*6+8]=0;
+                coords[(i*cols+j)*18+8]=0;
 
                 //Second triangle
                 coords[(i*cols+j)*18+9]=i;
                 coords[(i*cols+j)*6+10]=j+1;
-                coords[(i*cols+j)*6+11]=0;
+                coords[(i*cols+j)*18+11]=0;
 
                 coords[(i*cols+j)*18+12]=i+1;
                 coords[(i*cols+j)*18+13]=j+1;
@@ -154,24 +154,24 @@ public class TileGrid extends ScreenObject {
             for(int j=0; j<colN; j++)
             {
                 //First triangle
-                texCords[(i*colN+j)*18]=i; //x
-                texCords[(i*colN+j)*18+1]=j; //y
+                texCords[(i*colN+j)*12]= 0 ; //x
+                texCords[(i*colN+j)*12+1]=0; //y
 
-                texCords[(i*colN+j)*18+3]=i+1;
-                texCords[(i*colN+j)*18+4]=j;
+                texCords[(i*colN+j)*12+2]=1;
+                texCords[(i*colN+j)*12+3]=0;
 
-                texCords[(i*colN+j)*18+6]=i;
-                texCords[(i*colN+j)*18+7]=j+1;
+                texCords[(i*colN+j)*12+4]=0;
+                texCords[(i*colN+j)*12+5]=1;
 
                 //Second triangle
-                texCords[(i*colN+j)*18+9]=i;
-                texCords[(i*colN+j)*6+10]=j+1;
+                texCords[(i*colN+j)*12+6]=0;
+                texCords[(i*colN+j)*12+7]=1;
 
-                texCords[(i*colN+j)*18+12]=i+1;
-                texCords[(i*colN+j)*18+13]=j+1;
+                texCords[(i*colN+j)*12+8]=1;
+                texCords[(i*colN+j)*12+9]=1;
 
-                texCords[(i*colN+j)*18+15]=i;
-                texCords[(i*colN+j)*18+16]=j+1;
+                texCords[(i*colN+j)*12+10]=0;
+                texCords[(i*colN+j)*12+11]=1;
 
             }
         }
@@ -184,8 +184,8 @@ public class TileGrid extends ScreenObject {
     }
 
     /**
-     * Establece el zoom del objeto
-     * @param z El nuevo zoom (100%=1)
+     * Sets object zoom
+     * @param z The new zoom (100%=1)
      */
     public void setZoom(float z)
     {
@@ -197,19 +197,25 @@ public class TileGrid extends ScreenObject {
     }
 
     /**
-     * Establece el mapa a pintar
-     * @param m El map a pintar
+     * Sets all tiles
+     * @param data A integer bidimensional array with the index of the maps
      */
-    public void setMap(int row, int col, Map m)
+    public void setData(int[][] data)
     {
-        if(row<0 || col<0 || row>rowN || col>colN)
+        if(data.length != rowN)
             throw new IndexOutOfBoundsException();
 
-        maps[row][col]=m;
+        for(int row=0; row<rowN; row++)
+        {
+            for(int col=0; col<colN; col++)
+            {
+                maps[row][col] = mapLoader.getMap(data[row][col]);
+            }
+        }
     }
 
     /**
-     * Actualiza la matriz de transformacion
+     * Updates transformation matrix
      */
     private void updateMatrix()
     {

@@ -7,6 +7,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 public class Map {
+    float[] texCords;
     FloatBuffer textureCordsBuffer;
     int handle;
     float w;
@@ -18,7 +19,7 @@ public class Map {
         this.h = fH;
         handle = hnd;
 
-        float[] texCords = new float[]{
+        texCords = new float[]{
                 x0, y0,
                 x0, y1,
                 x1, y0,
@@ -52,4 +53,6 @@ public class Map {
     {
         return textureCordsBuffer;
     }
+
+    public float[] getCords() { return texCords; };
 }

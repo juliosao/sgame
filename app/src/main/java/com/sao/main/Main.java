@@ -6,15 +6,9 @@ import com.sao.sgame.Ui.SGameSurfaceView;
 public class Main extends SGameActivity {
     @Override
     public void onGameStarted(SGameSurfaceView src) {
-        Bueno.init(src);
-        Malo.init(src);
-        Disparo.init(src);
-        Fuego.init(src);
-        Fondo.init(src);
-
-        src.addBrain(new Bueno(src));
-        src.addBrain(new CreaMalos(src));
-        src.addBrain(new Fondo(src));
+        Background.init(src);
+        Background bg = new Background(src);
+        src.addBrain(bg);
     }
 
     @Override
